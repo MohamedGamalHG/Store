@@ -1,0 +1,42 @@
+﻿@model Store.Models.Category
+
+@{
+    ViewData["Title"] = "Edit";
+    string urlAction = Context.Request.Path.ToString().Split("/")[3];
+    urlAction = $"{urlAction[0].ToString().ToUpper()}{urlAction.Substring(1)}";
+}
+
+<h4 class="d-inline-block">@urlAction Category</h4>
+<hr />
+
+<div class="col-md-12">
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name">Category Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" id="backToList" class="btn btn-danger">Back to List</a>
+
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $('#backToList').on('click', function (e) {
+            e.preventDefault();
+            var check = confirm("Data That You Change It Will Not Saved !!")
+            if(check)
+                window.location = $(this).attr('href')
+        })
+    </script>
+}
